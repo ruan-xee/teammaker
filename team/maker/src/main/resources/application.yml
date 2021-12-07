@@ -1,0 +1,31 @@
+spring:
+  devtools:
+    restart:
+      additional-paths: src/main/java
+  datasource:
+    product:
+      jdbc-url: jdbc:mysql:///blog?serverTimezone=GMT&characterEncoding=utf8
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        min-idle: 0
+        max-wait: -1
+    timeout: 10000
+mybatis:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.sen.springboot.model
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+      cookie:
+        http-only: true

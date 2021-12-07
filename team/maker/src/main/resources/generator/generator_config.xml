@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--    生产配置文件-->
+    <!--    <properties></properties>-->
+    <context id="whiteguest-product" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql:///blog?characterEncoding=utf8&amp;serverTimezone=UTC"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+        <javaModelGenerator targetPackage="com.sen.springboot.model"
+                            targetProject="./src/main/java">
+            <property name="enabelSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="com.sen.springboot.mapper"
+                         targetProject="./src/main/resources/mapper">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <javaClientGenerator type="MIXEDMAPPER"
+                             targetPackage="com.sen.springboot.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!--        tableName=%就是全部-->
+        <table tableName="tb_user" domainObjectName="User">
+            <!--            <generatedKey column="id" sqlStatement="CALL IDENTITY()" identity="true" />-->
+        </table>
+        <table tableName="tb_role" domainObjectName="Role"></table>
+        <table tableName="tb_user_role" domainObjectName="UserMapRole"></table>
+        <table tableName="tb_permission" domainObjectName="Permission"></table>
+        <table tableName="tb_role_permission" domainObjectName="RoleMapPermission"></table>
+        <!--<table tableName="sys_role" domainObjectName="SysRole"></table>-->
+        <!--<table tableName="user_map_roles" domainObjectName="UserMapRoles"></table>-->
+        <!--<table tableName="permission" domainObjectName="Permission"></table>-->
+        <!--<table tableName="role_map_permission" domainObjectName="RoleMapPermission"></table>-->
+        <!--<table tableName="category" domainObjectName="Category"></table>-->
+    </context>
+
+        <!--测试环境-->
+<!--    <context id="whiteguest-test" targetRuntime="MyBatis3">-->
+<!--        <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin"/>-->
+<!--        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+<!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>-->
+<!--        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>-->
+<!--        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"-->
+<!--                        connectionURL="jdbc:mysql://39.97.123.50:3306/white_artical_test?characterEncoding=utf8"-->
+<!--                        userId="mason"-->
+<!--                        password="mason123@">-->
+<!--        </jdbcConnection>-->
+<!--        <javaModelGenerator targetPackage="com.mason.spring.wj.model.test"-->
+<!--                            targetProject="./src/main/java">-->
+<!--            <property name="enabelSubPackages" value="true"/>-->
+<!--            <property name="trimStrings" value="true"/>-->
+<!--        </javaModelGenerator>-->
+<!--        <sqlMapGenerator targetPackage="com.mason.spring.wj.mapper"-->
+<!--                         targetProject="./src/main/resources/mapper/test">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </sqlMapGenerator>-->
+<!--        <javaClientGenerator type="MIXEDMAPPER"-->
+<!--                             targetPackage="com.mason.spring.wj.mapper.test"-->
+<!--                             targetProject="./src/main/java">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </javaClientGenerator>-->
+<!--        &lt;!&ndash;        tableName=%就是全部&ndash;&gt;-->
+<!--        <table tableName="article" domainObjectName="Article">-->
+<!--            &lt;!&ndash;            <generatedKey column="id" sqlStatement="CALL IDENTITY()" identity="true" />&ndash;&gt;-->
+<!--        </table>-->
+<!--        <table tableName="course" domainObjectName="Course"></table>-->
+<!--    </context>-->
+</generatorConfiguration>
