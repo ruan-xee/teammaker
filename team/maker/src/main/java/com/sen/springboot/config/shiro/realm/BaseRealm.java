@@ -42,7 +42,7 @@ public class BaseRealm extends AuthorizingRealm {
 
         //获取用户的角色
         Set<Role> roleSet = shiroService.getUserRoles(user.getId());
-        Set<String> roleString = roleSet.stream().map(Role::getRole).collect(Collectors.toSet());
+        Set<String> roleString = roleSet.stream().map(Role::getRoleName).collect(Collectors.toSet());
         simpleAuthorizationInfo.setRoles(roleString);
         log.info(roleSet.toString());
 
