@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/team/maker/maker.iml" filepath="$PROJECT_DIR$/team/maker/maker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/team/team.iml" filepath="$PROJECT_DIR$/team/team.iml" />
-    </modules>
-  </component>
-</project>
