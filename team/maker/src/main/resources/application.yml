@@ -2,14 +2,17 @@ spring:
   devtools:
     restart:
       additional-paths: src/main/java
+      enabled: true
+  freemarker:
+    cache: false
   datasource:
     product:
-      jdbc-url: jdbc:mysql:///blog?serverTimezone=GMT&characterEncoding=utf8
+      jdbc-url: jdbc:mysql://112.74.82.69:3306/blog?serverTimezone=GMT&characterEncoding=utf8
       username: root
       password: 123456
       driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    host: localhost
+    host: 112.74.82.69
     port: 6379
     lettuce:
       pool:
@@ -17,6 +20,10 @@ spring:
         min-idle: 0
         max-wait: -1
     timeout: 10000
+    password: 123456
+  register:
+    expire-time: 300
+    lock-time: 60 #验证码限制发送间隔
 mybatis:
   mapper-locations: classpath*:/mapper/**/*.xml
   type-aliases-package: com.sen.springboot.model
@@ -29,3 +36,5 @@ server:
       tracking-modes: cookie
       cookie:
         http-only: true
+
+debug: true

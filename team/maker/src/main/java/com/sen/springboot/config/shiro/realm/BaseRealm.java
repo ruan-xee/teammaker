@@ -5,7 +5,7 @@ import com.sen.springboot.model.Permission;
 import com.sen.springboot.model.Role;
 import com.sen.springboot.model.User;
 import com.sen.springboot.service.ShiroService;
-import com.sen.springboot.service.UserService;
+import com.sen.springboot.service.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

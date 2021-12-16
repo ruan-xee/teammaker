@@ -1,5 +1,6 @@
 package com.sen.springboot.config.shiro;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
+@Slf4j
 @Configuration
 public class ShiroRedisConfig {
 
@@ -19,8 +20,10 @@ public class ShiroRedisConfig {
     private Integer redisPort;
     @Value("${spring.redis.timeout}")
     private Integer redisTimeOut;
+    @Value("${spring.redis.password}")
+    private String password;
 
-    private final Integer redisExpireTime = 3600 * 2;
+    private final Integer redisExpireTime = 3600 * 2;   //2小时
     /**据说这是Spring3的用法**/
 //    @Bean
 //    public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
@@ -45,6 +48,7 @@ public class ShiroRedisConfig {
         RedisManager redisManager = new RedisManager();
         redisManager.setHost(redisHost);
         redisManager.setPort(redisPort);
+        redisManager.setPassword(password);
         redisManager.setTimeout(redisTimeOut);
         redisManager.setExpire(redisExpireTime);
         return redisManager;

@@ -14,7 +14,8 @@ public class PwRealm extends BaseRealm{
         }
         String password = user.getPassword();
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(account, password, ByteSource.Util.bytes(salt), getName());
+        System.out.println(user);
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(account, password, salt, getName());
         return authenticationInfo;
     }
 
