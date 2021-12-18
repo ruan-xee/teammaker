@@ -39,7 +39,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(getPwRealm());
+        defaultWebSecurityManager.setRealm(pwRealm());
         defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
         defaultWebSecurityManager.setCacheManager(cacheManager);
         defaultWebSecurityManager.setSessionManager(sessionManager);
@@ -98,7 +98,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public PwRealm getPwRealm() {
+    public PwRealm pwRealm() {
         PwRealm pwRealm = new PwRealm();
         //配置自定义密码比较器
         pwRealm.setCredentialsMatcher(hashedCredentialsMatcher());

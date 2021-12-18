@@ -13,8 +13,9 @@ public class PwRealm extends BaseRealm{
             throw new UnknownAccountException();
         }
         String password = user.getPassword();
+        System.out.println(password);
         ByteSource salt = ByteSource.Util.bytes(user.getSalt());
-        System.out.println(user);
+        System.out.println(salt);
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(account, password, salt, getName());
         return authenticationInfo;
     }

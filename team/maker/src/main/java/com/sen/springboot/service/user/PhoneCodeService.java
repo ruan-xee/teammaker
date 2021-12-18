@@ -3,13 +3,16 @@ package com.sen.springboot.service.user;
 import com.sen.springboot.common.RedisUtil;
 import com.sen.springboot.exception.ServiceException;
 import com.sen.springboot.exception.ServiceExceptionEnum;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
+@Slf4j
 public class PhoneCodeService {
-    @Autowired
+    @Resource
     RedisUtil redisUtil;
 
     @Value("${spring.register.expire-time}")
@@ -18,7 +21,7 @@ public class PhoneCodeService {
     @Value("${spring.register.lock-time}")
     private long lockTime;
 
-    public void sendRegisterCode(String phoneNumber){
+    public void sendCode(String phoneNumber){
         //发送验证码服务，暂时以固定格式9999存储
         if (!checkExpire(phoneNumber)){
             throw new ServiceException(ServiceExceptionEnum.CODE_SEND_FREQUENTY);

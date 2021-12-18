@@ -13,7 +13,7 @@ CREATE TABLE `tb_user` (
   `password` varchar(50) NOT NULL COMMENT '密码',
   `phone` varchar(11) NOT NULL COMMENT '手机号',
   `salt` varchar(100) NOT NULL COMMENT '盐值',
-  `role_id` bigint(20) DEFAULT 2 COMMENT '角色id，默认“用户”',
+  `role_id` bigint(20) DEFAULT NULL COMMENT '角色id，默认“用户”',
   `avater` varchar(50) DEFAULT NULL comment '头像',
   `create_time` timestamp NULL DEFAULT current_timestamp COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT current_timestamp on update current_timestamp COMMENT '更新时间',

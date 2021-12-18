@@ -5,7 +5,9 @@ public enum NormalInfoEnum {
     REGISTER_SUCCESS("注册成功"),
     REGISTER_FAIL("注册失败"),
     CODE_SEND_SUCCESS("验证码已发送，5分钟内有效"),
-    CODE_CHECK_SUCCESS("验证成功");
+    CODE_CHECK_SUCCESS("验证成功"),
+    RESETPWD_SUCCESS("密码重置成功"),
+    RESETPWD_FAIL("密码重置失败");
 
     private final String message;
 
