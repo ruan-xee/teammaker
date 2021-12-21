@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController
 @Slf4j
 @Api(tags = "注册管理")
@@ -36,7 +38,7 @@ public class RegisterController {
     @PostMapping(value = "/api/register/getcode", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result getRegisterCode(@RequestBody @Validated PhoneCodeDto phoneCodeDto){
         String phone = phoneCodeDto.getPhone();
-        if (phone == null){
+        if (Objects.isNull(phone)){
             throw new ServiceException(ServiceExceptionEnum.PHONE_ARE_EMPTY);
         } else {
             if (!RegexpUtils.checkPhone(phone)){
@@ -44,7 +46,7 @@ public class RegisterController {
             }
         }
         User user = userService.getUserByPhone(phone);
-        if (user != null){
+        if (!Objects.isNull(user)){
             throw new ServiceException(ServiceExceptionEnum.USER_ALREADY_EXIST);
         }
         phoneCodeService.sendCode(phone);
@@ -63,6 +65,9 @@ public class RegisterController {
     @ApiOperation(value = "注册step2设置密码", notes = "注册POST接口")
     @PostMapping(value = "/api/register/pwd", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result addNewUser(@RequestBody @Validated RegisterDto registerDto){
+        if (!phoneCodeService.isExistCode(registerDto.getPhone())){
+            throw new ServiceException(ServiceExceptionEnum.USER_AUTHENTICATED_TIMEOUT);
+        }
         int status = 4;
         status = userService.addUserByPhone(registerDto);
         switch (status) {

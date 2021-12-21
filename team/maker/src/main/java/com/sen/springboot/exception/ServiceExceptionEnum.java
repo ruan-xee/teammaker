@@ -18,6 +18,7 @@ public enum ServiceExceptionEnum {
     PHONE_ARE_EMPTY("请绑定手机号"),
     CODE_ERROR("验证码错误"),
     CODE_INVALID("验证码已失效"),
+    USER_AUTHENTICATED_TIMEOUT("用户认证超时"),
     CODE_SEND_FREQUENTY("请勿频繁发送"),
     ACCOUNT_FORMAT_ERROR("手机号格式错误"),
     REGISTER_DUPLICATED("该用户已经注册");

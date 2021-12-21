@@ -1,9 +1,6 @@
 package com.sen.springboot.service;
 
-import com.sen.springboot.mapper.PermissionMapper;
-import com.sen.springboot.mapper.RoleMapPermissionMapper;
-import com.sen.springboot.mapper.RoleMapper;
-import com.sen.springboot.mapper.UserMapRoleMapper;
+import com.sen.springboot.mapper.*;
 import com.sen.springboot.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +20,8 @@ public class ShiroService {
     PermissionMapper permissionMapper;
     @Resource
     UserMapRoleMapper userMapRoleMapper;
+    @Resource
+    MyUserMapRoleMapper myUserMapRoleMapper;
     @Resource
     RoleMapPermissionMapper roleMapPermissionMapper;
 
@@ -64,6 +63,6 @@ public class ShiroService {
         UserMapRole userMapRoles = new UserMapRole();
         userMapRoles.setUserId(userId);
         userMapRoles.setRoleId((long) roleId);
-        userMapRoleMapper.insert(userMapRoles);
+        myUserMapRoleMapper.insert(userMapRoles);
     }
 }

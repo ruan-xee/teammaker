@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -60,5 +61,14 @@ public class PhoneCodeService {
             throw new IllegalArgumentException("随机数位数必须大于0");
         }
         return (long) (Math.random() * 9 * Math.pow(10, n - 1)) + (long) Math.pow(10, n - 1);
+    }
+
+    public boolean isExistCode(String key){
+        String inCode = (String) redisUtil.get(key);
+        if (Objects.isNull(inCode)){
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.sen.springboot.config.shiro;
 
+import com.sen.springboot.config.shiro.realm.CodeRealm;
 import com.sen.springboot.config.shiro.realm.PwRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
@@ -17,7 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -39,7 +42,10 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(pwRealm());
+        List<Realm> realms = new ArrayList<>();
+        realms.add(pwRealm());
+        realms.add(codeRealm());
+        defaultWebSecurityManager.setRealms(realms);
         defaultWebSecurityManager.setRememberMeManager(rememberMeManager());
         defaultWebSecurityManager.setCacheManager(cacheManager);
         defaultWebSecurityManager.setSessionManager(sessionManager);
@@ -103,6 +109,11 @@ public class ShiroConfig {
         //配置自定义密码比较器
         pwRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return pwRealm;
+    }
+
+    @Bean
+    public CodeRealm codeRealm(){
+        return new CodeRealm();
     }
 
     /**

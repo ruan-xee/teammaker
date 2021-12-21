@@ -1,5 +1,6 @@
 package com.sen.springboot.service.user;
 
+import com.sen.springboot.common.RedisUtil;
 import com.sen.springboot.common.SnowFlake;
 import com.sen.springboot.common.SysRoleEnum;
 import com.sen.springboot.dto.ResetPwd.ResetPwdDto;
@@ -27,6 +28,8 @@ public class UserService {
     ShiroService shiroService;
     @Resource
     SnowFlake snowFlake;
+    @Resource
+    RedisUtil redisUtil;
 
     public User addUser(RegisterDto userDto) {
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
@@ -58,7 +61,7 @@ public class UserService {
             return AddUserStatusEnum.DB_ADD_ERROR.getStatus();
         }
 
-//        redisUtil.del(userDto.getPhone());
+        redisUtil.del(userDto.getPhone());
         shiroService.setUserMapRoles(result.getId(), SysRoleEnum.USER.getRoleId());
         return AddUserStatusEnum.SUCCESS.getStatus();
     }
@@ -92,6 +95,7 @@ public class UserService {
         user.setPassword(encodePassword);
         int i = userMapper.updateByPrimaryKey(user);
         if (i == 1){
+            redisUtil.del(resetPwdDto.getPhone());
             return ResetPwdStatusEnum.SUCCESS.getStatus();
         } else {
             return ResetPwdStatusEnum.DB_RESET_ERROR.getStatus();

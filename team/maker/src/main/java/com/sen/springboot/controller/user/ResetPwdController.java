@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController
 @Slf4j
 @Api(tags = "重置密码")
@@ -36,7 +38,7 @@ public class ResetPwdController {
     @PostMapping(value = "/api/reset/getcode", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result getResetCode(@RequestBody @Validated PhoneCodeDto phoneCodeDto){
         String phone = phoneCodeDto.getPhone();
-        if (phone == null){
+        if (Objects.isNull(phone)){
             throw new ServiceException(ServiceExceptionEnum.PHONE_ARE_EMPTY);
         } else {
             if (!RegexpUtils.checkPhone(phone)){
@@ -44,7 +46,7 @@ public class ResetPwdController {
             }
         }
         User user = userService.getUserByPhone(phone);
-        if (user == null){
+        if (Objects.isNull(user)){
             throw new ServiceException(ServiceExceptionEnum.USER_NOT_FOUND);
         }
         phoneCodeService.sendCode(phone);
@@ -63,6 +65,9 @@ public class ResetPwdController {
     @ApiOperation(value = "忘记密码step2重置密码", notes = "POST接口")
     @PostMapping(value = "/api/reset/pwd", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result resetOldUser(@RequestBody @Validated ResetPwdDto resetPwdDto){
+        if (!phoneCodeService.isExistCode(resetPwdDto.getPhone())){
+            throw new ServiceException(ServiceExceptionEnum.USER_AUTHENTICATED_TIMEOUT);
+        }
         int status = 4;
         status = userService.updatePwdByPhone(resetPwdDto);
 

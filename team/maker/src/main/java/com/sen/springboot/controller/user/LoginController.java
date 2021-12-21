@@ -4,6 +4,7 @@ import com.sen.springboot.common.NormalInfoEnum;
 import com.sen.springboot.common.RegexpUtils;
 import com.sen.springboot.common.result.Result;
 import com.sen.springboot.common.result.ResultFactory;
+import com.sen.springboot.config.shiro.token.PhoneToken;
 import com.sen.springboot.dto.code.CodeCheckDto;
 import com.sen.springboot.dto.code.PhoneCodeDto;
 import com.sen.springboot.dto.login.PasswordLoginDto;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -39,6 +41,7 @@ public class LoginController {
 
     private UsernamePasswordToken tokenLogin(UsernamePasswordToken token) {
         Subject subject = SecurityUtils.getSubject();
+        token.setRememberMe(true);
         try {
             subject.login(token);
             if (!subject.isAuthenticated()) {
@@ -54,7 +57,7 @@ public class LoginController {
     @PostMapping(value = "/api/login/getcode", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result getLoginCode(@RequestBody @Validated PhoneCodeDto phoneCodeDto){
         String phone = phoneCodeDto.getPhone();
-        if (phone == null){
+        if (Objects.isNull(phone)){
             throw new ServiceException(ServiceExceptionEnum.PHONE_ARE_EMPTY);
         } else {
             if (!RegexpUtils.checkPhone(phone)){
@@ -62,7 +65,7 @@ public class LoginController {
             }
         }
         User user = userService.getUserByPhone(phone);
-        if (user == null){
+        if (Objects.isNull(user)){
             throw new ServiceException(ServiceExceptionEnum.USER_NOT_FOUND);
         }
         phoneCodeService.sendCode(phone);
@@ -81,9 +84,9 @@ public class LoginController {
         if (!phoneCodeService.checkCode(phone, codeCheckDto.getCode())) {
             throw new ServiceException(ServiceExceptionEnum.CODE_ERROR);
         }
-        User user = userService.getUserByPhone(phone);
-        UsernamePasswordToken phoneToken = new UsernamePasswordToken(phone,user.getPassword());
-        return ResultFactory.buildSuccessResult(phoneToken.toString());
+        UsernamePasswordToken phoneToken = new PhoneToken(phone,true);
+        UsernamePasswordToken token = tokenLogin(phoneToken);
+        return ResultFactory.buildSuccessResult(token.toString());
     }
 
     @ApiOperation(value = "密码登录", notes = "密码登录POST接口")
